@@ -15,6 +15,20 @@ CLASS_NAMES = [
 model = tf.keras.models.load_model(MODEL_PATH)
 print("✅ Model loaded successfully\n")
 
+# Keep labels aligned with the model output dimensions.
+MODEL_OUTPUT_CLASSES = int(model.output_shape[-1])
+if MODEL_OUTPUT_CLASSES <= len(CLASS_NAMES):
+    ACTIVE_CLASS_NAMES = CLASS_NAMES[:MODEL_OUTPUT_CLASSES]
+else:
+    extra = [f"Class_{i}" for i in range(len(CLASS_NAMES), MODEL_OUTPUT_CLASSES)]
+    ACTIVE_CLASS_NAMES = CLASS_NAMES + extra
+
+if MODEL_OUTPUT_CLASSES != len(CLASS_NAMES):
+    print(
+        f"⚠️ Class label mismatch: model outputs {MODEL_OUTPUT_CLASSES}, "
+        f"configured labels {len(CLASS_NAMES)}. Using {len(ACTIVE_CLASS_NAMES)} labels."
+    )
+
 # ── Predict ───────────────────────────────────────────────────────────────────
 
 def predict(img_path):
@@ -25,7 +39,7 @@ def predict(img_path):
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
 
     predictions     = model.predict(img_array, verbose=0)
-    predicted_class = CLASS_NAMES[np.argmax(predictions)]
+    predicted_class = ACTIVE_CLASS_NAMES[int(np.argmax(predictions[0]))]
     confidence      = np.max(predictions) * 100
 
     print(f"🔍 Prediction:  {predicted_class}")
