@@ -64,7 +64,7 @@ function closeCamera() {
   video.style.display = "block";
   cameraBtn.disabled = false;
   uploadBtn.disabled = false;
-  resultDiv.classList.remove("show");
+  resultDiv.style.display = "none";
 }
 
 function handleFileSelect(event) {
@@ -92,7 +92,7 @@ async function predictImage(imageData, source) {
   try {
     errorDiv.style.display = "none";
     loadingDiv.style.display = "block";
-    resultDiv.classList.remove("show");
+    resultDiv.style.display = "none";
 
     let response;
 
@@ -152,14 +152,14 @@ function displayResult(result) {
   confidenceFill.style.width = `${result.confidence}%`;
 
   let predictionsHtml =
-    '<div style="margin-top: 10px;"><strong>All Predictions:</strong></div>';
+    '<div class="mt-2.5 font-semibold">All Predictions:</div>';
   const sorted = Object.entries(result.all_predictions).sort(
     (a, b) => b[1] - a[1],
   );
 
   sorted.forEach(([className, confidence]) => {
     predictionsHtml += `
-      <div class="prediction-item">
+      <div class="flex justify-between py-2 border-b border-[#eef2f7] last:border-0">
         <span>${className}</span>
         <span>${confidence.toFixed(1)}%</span>
       </div>
@@ -167,7 +167,7 @@ function displayResult(result) {
   });
 
   allPredictions.innerHTML = predictionsHtml;
-  resultDiv.classList.add("show");
+  resultDiv.style.display = "block";
 }
 
 function showError(message) {
