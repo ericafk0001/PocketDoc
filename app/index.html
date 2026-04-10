@@ -41,13 +41,24 @@
           </h1>
         </div>
 
-        <div
-          class="mb-5 rounded-full bg-[#e7e9ee] px-[18px] py-4 flex items-center gap-3 text-[#5b6270] text-[18px] font-semibold"
-          aria-hidden="true"
+        <form
+          id="askAiForm"
+          class="mb-5 rounded-[22px] bg-[#e7e9ee] p-2.5 flex items-center gap-2"
         >
-          <span class="text-[22px]">&#128269;</span>
-          <span>Ask AI for symptoms or wound tips</span>
-        </div>
+          <i class="bi bi-chat-dots-fill text-[#5b6270] text-[20px] pl-2"></i>
+          <input
+            id="askAiInput"
+            type="text"
+            placeholder="Ask AI for symptoms or wound tips"
+            class="flex-1 bg-transparent outline-none text-[15px] font-semibold text-[#222939] placeholder:text-[#6e7582]"
+          />
+          <button
+            type="submit"
+            class="rounded-full bg-[#2f7af6] text-white px-4 py-2.5 text-sm font-bold shadow-[0_8px_20px_rgba(47,122,246,0.2)]"
+          >
+            Send
+          </button>
+        </form>
 
         <h2
           class="text-[36px] sm:text-[42px] leading-none tracking-[-0.8px] mb-2 px-1"
@@ -220,11 +231,12 @@
           <i class="bi bi-camera-fill"></i>
         </button>
 
-        <div
+        <a
+          href="chats.html"
           class="text-center rounded-full text-[#6f7581] text-xs font-bold py-2.5 flex-1"
         >
           Chats
-        </div>
+        </a>
         <div
           class="text-center rounded-full text-[#6f7581] text-xs font-bold py-2.5 flex-1"
         >

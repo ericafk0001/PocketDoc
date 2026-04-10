@@ -45,6 +45,23 @@ pip install -r requirements.txt
 ### 3. Run the Flask App
 
 ```bash
+# Set Hack Club AI key for chat features (macOS/Linux)
+export HACK_CLUB_AI_API_KEY="your_key_here"
+
+python app.py
+```
+
+Windows (PowerShell):
+
+```powershell
+$env:HACK_CLUB_AI_API_KEY="your_key_here"
+python app.py
+```
+
+Windows (Command Prompt):
+
+```bat
+set HACK_CLUB_AI_API_KEY=your_key_here
 python app.py
 ```
 
@@ -171,4 +188,4 @@ curl -X POST http://localhost:5000/predict/camera \
 
 ## License
 
-Please add your license information here.
+See [LICENSE](LICENSE)

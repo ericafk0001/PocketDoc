@@ -3,3 +3,4 @@ tensorflow==2.21.0
 Pillow
 pillow-heif
 Werkzeug==3.0.1
+requests

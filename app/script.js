@@ -14,6 +14,9 @@ const cameraControls = document.querySelector(".camera-controls");
 const resultDiv = document.getElementById("result");
 const loadingDiv = document.getElementById("loading");
 const errorDiv = document.getElementById("error");
+const askAiForm = document.getElementById("askAiForm");
+const askAiInput = document.getElementById("askAiInput");
+const chatHistory = document.getElementById("chatHistory");
 
 // Bottom bar camera popup elements
 const bottomCameraBtn = document.getElementById("bottomCameraBtn");
@@ -21,6 +24,64 @@ const cameraPopup = document.getElementById("cameraPopup");
 const popupCameraBtn = document.getElementById("popupCameraBtn");
 const popupUploadBtn = document.getElementById("popupUploadBtn");
 const closePopupBtn = document.getElementById("closePopupBtn");
+
+function loadConversations() {
+  try {
+    const raw = localStorage.getItem("pocketdoc_conversations");
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function renderChatHistory() {
+  if (!chatHistory) return;
+
+  const conversations = loadConversations()
+    .filter((conv) => Array.isArray(conv.messages) && conv.messages.length > 0)
+    .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))
+    .slice(0, 4);
+
+  if (conversations.length === 0) {
+    chatHistory.innerHTML = `
+      <a href="ai.html" class="block rounded-[18px] border border-[#e3e7ee] bg-white p-3.5">
+        <div class="flex items-center gap-3">
+          <div class="w-14 h-14 rounded-xl bg-[#edf3ff] flex-shrink-0 grid place-items-center text-[#2f7af6]">
+            <i class="bi bi-stars"></i>
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold text-[#1f3f78]">No chats yet</div>
+            <div class="text-sm text-[#6f7683]">Ask your first wound-care question</div>
+          </div>
+        </div>
+      </a>
+    `;
+    return;
+  }
+
+  chatHistory.innerHTML = conversations
+    .map((conv) => {
+      const firstUser = conv.messages.find((m) => m.role === "user");
+      const preview = (firstUser?.content || "New conversation").slice(0, 70);
+      const count = conv.messages.filter((m) => m.role === "user").length;
+      return `
+        <a href="ai.html?chat=${encodeURIComponent(conv.id)}" class="block rounded-[18px] border border-[#e3e7ee] bg-white p-3.5 hover:border-[#c7d8fb]">
+          <div class="flex items-center gap-3">
+            <div class="w-14 h-14 rounded-xl bg-[#edf3ff] flex-shrink-0 grid place-items-center text-[#2f7af6]">
+              <i class="bi bi-chat-left-text"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="font-semibold text-[#1f3f78] truncate">${preview || "Conversation"}</div>
+              <div class="text-sm text-[#6f7683]">${count} question${count === 1 ? "" : "s"}</div>
+            </div>
+          </div>
+        </a>
+      `;
+    })
+    .join("");
+}
 
 async function startCamera() {
   try {
@@ -176,6 +237,12 @@ function displayResult(result) {
   allPredictions.innerHTML = predictionsHtml;
   mediaContainer.style.display = "none";
   resultDiv.style.display = "block";
+
+  const learnLink = resultDiv.querySelector('a[href="ai.html"]');
+  if (learnLink) {
+    const prompt = `I got a ${result.class} prediction at ${result.confidence.toFixed(1)}% confidence. What should I do next?`;
+    learnLink.href = `ai.html?message=${encodeURIComponent(prompt)}`;
+  }
 }
 
 function showError(message) {
@@ -216,5 +283,16 @@ popupUploadBtn.addEventListener("click", () => {
   fileInput.click();
 });
 closePopupBtn.addEventListener("click", closeCameraPopup);
+
+if (askAiForm && askAiInput) {
+  askAiForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const message = askAiInput.value.trim();
+    if (!message) return;
+    window.location.href = `ai.html?message=${encodeURIComponent(message)}`;
+  });
+}
+
+renderChatHistory();
 
 console.log("🏥 PocketDoc app loaded successfully");
