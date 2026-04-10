@@ -7,6 +7,15 @@ from io import BytesIO
 from PIL import Image
 import base64
 
+try:
+    from pillow_heif import register_heif_opener
+
+    register_heif_opener()
+    print("✅ HEIC/HEIF support enabled")
+except ImportError:
+    # Keep app startup working even if optional dependency is missing.
+    print("⚠️ HEIC/HEIF support unavailable (install pillow-heif)")
+
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 app = Flask(__name__, static_folder='app', static_url_path='')
@@ -19,7 +28,7 @@ CLASS_NAMES = [
 ]
 
 UPLOAD_FOLDER = "uploads"
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'heic', 'heif'}
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)

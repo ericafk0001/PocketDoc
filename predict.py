@@ -1,6 +1,15 @@
 import tensorflow as tf
 import numpy as np
 
+try:
+    from pillow_heif import register_heif_opener
+
+    register_heif_opener()
+    print("✅ HEIC/HEIF support enabled")
+except ImportError:
+    # Optional: regular image formats still work without pillow-heif.
+    print("⚠️ HEIC/HEIF support unavailable (install pillow-heif)")
+
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 MODEL_PATH = "./wound_classifier.keras"

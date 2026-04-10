@@ -148,7 +148,7 @@ curl -X POST http://localhost:5000/predict/camera \
 - **Backend:** Flask web framework
 - **Model:** TensorFlow/Keras (224x224 input, 8 classes)
 - **Frontend:** Vanilla JavaScript with HTML5 Canvas & WebRTC
-- **File Handling:** Supports PNG, JPG, JPEG, GIF, WebP
+- **File Handling:** Supports PNG, JPG, JPEG, GIF, WebP, HEIC, HEIF
 - **Max File Size:** 16MB
 
 ## Troubleshooting
