@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PocketDoc Chats</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+  <body
+    class="min-h-dvh bg-[#eceef2] p-4 text-[#181a21] flex items-center justify-center"
+  >
+    <div
+      class="w-full max-w-[430px] h-[min(932px,calc(100dvh-32px))] rounded-[30px] sm:rounded-[34px] border border-[#d9dee8] bg-[#f7f8fa] shadow-[0_16px_46px_rgba(12,27,61,0.12)] relative overflow-hidden flex flex-col"
+    >
+      <div class="px-4 py-4 border-b border-[#e3e7ee] bg-[#f7f8fa]">
+        <div class="flex items-center justify-between">
+          <a
+            href="index.html"
+            class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#2f7af6] shadow-sm border border-[#e3e7ee]"
+          >
+            <i class="bi bi-arrow-left"></i>
+            Home
+          </a>
+          <div class="text-right">
+            <div
+              class="text-[13px] uppercase tracking-[0.18em] text-[#7b8391] font-semibold"
+            >
+              PocketDoc
+            </div>
+            <div class="text-lg font-bold text-[#1f3f78]">Chats</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-4 py-4 pb-28" id="chatList"></div>
+
+      <div class="absolute left-3 right-3 bottom-3 sm:left-4 sm:right-4 sm:bottom-4">
+        <a
+          href="ai.html"
+          class="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2f7af6] px-4 py-3 text-sm font-bold text-white shadow-[0_10px_20px_rgba(47,122,246,0.22)]"
+        >
+          <i class="bi bi-stars"></i>
+          Start new AI chat
+        </a>
+      </div>
+    </div>
+
+    <script src="chats.js"></script>
+  </body>
+</html>
