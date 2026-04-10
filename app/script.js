@@ -15,6 +15,13 @@ const resultDiv = document.getElementById("result");
 const loadingDiv = document.getElementById("loading");
 const errorDiv = document.getElementById("error");
 
+// Bottom bar camera popup elements
+const bottomCameraBtn = document.getElementById("bottomCameraBtn");
+const cameraPopup = document.getElementById("cameraPopup");
+const popupCameraBtn = document.getElementById("popupCameraBtn");
+const popupUploadBtn = document.getElementById("popupUploadBtn");
+const closePopupBtn = document.getElementById("closePopupBtn");
+
 async function startCamera() {
   try {
     errorDiv.style.display = "none";
@@ -31,8 +38,8 @@ async function startCamera() {
     };
     mediaContainer.style.display = "block";
     cameraControls.style.display = "flex";
-    cameraBtn.disabled = true;
-    uploadBtn.disabled = true;
+    if (cameraBtn) cameraBtn.disabled = true;
+    if (uploadBtn) uploadBtn.disabled = true;
   } catch (error) {
     showError("Camera access denied or not available: " + error.message);
   }
@@ -62,8 +69,8 @@ function closeCamera() {
   cameraControls.style.display = "none";
   imagePreview.style.display = "none";
   video.style.display = "block";
-  cameraBtn.disabled = false;
-  uploadBtn.disabled = false;
+  if (cameraBtn) cameraBtn.disabled = false;
+  if (uploadBtn) uploadBtn.disabled = false;
   resultDiv.style.display = "none";
 }
 
@@ -78,8 +85,8 @@ function handleFileSelect(event) {
     mediaContainer.style.display = "block";
     cameraControls.style.display = "flex";
     video.style.display = "none";
-    cameraBtn.disabled = true;
-    uploadBtn.disabled = true;
+    if (cameraBtn) cameraBtn.disabled = true;
+    if (uploadBtn) uploadBtn.disabled = true;
 
     setTimeout(() => predictImage(capturedImageData, "upload"), 500);
   };
@@ -167,6 +174,7 @@ function displayResult(result) {
   });
 
   allPredictions.innerHTML = predictionsHtml;
+  mediaContainer.style.display = "none";
   resultDiv.style.display = "block";
 }
 
@@ -175,10 +183,38 @@ function showError(message) {
   errorDiv.style.display = "block";
 }
 
-cameraBtn.addEventListener("click", startCamera);
-uploadBtn.addEventListener("click", () => fileInput.click());
+// Popup management functions
+function openCameraPopup() {
+  cameraPopup.classList.remove("hidden");
+}
+
+function closeCameraPopup() {
+  cameraPopup.classList.add("hidden");
+}
+
+// Close popup when clicking on background
+cameraPopup.addEventListener("click", (e) => {
+  if (e.target === cameraPopup) {
+    closeCameraPopup();
+  }
+});
+
+if (cameraBtn) cameraBtn.addEventListener("click", startCamera);
+if (uploadBtn) uploadBtn.addEventListener("click", () => fileInput.click());
 fileInput.addEventListener("change", handleFileSelect);
 captureBtn.addEventListener("click", captureImage);
 closeBtn.addEventListener("click", closeCamera);
+
+// Bottom bar camera button events
+bottomCameraBtn.addEventListener("click", openCameraPopup);
+popupCameraBtn.addEventListener("click", () => {
+  closeCameraPopup();
+  startCamera();
+});
+popupUploadBtn.addEventListener("click", () => {
+  closeCameraPopup();
+  fileInput.click();
+});
+closePopupBtn.addEventListener("click", closeCameraPopup);
 
 console.log("🏥 PocketDoc app loaded successfully");

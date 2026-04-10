@@ -14,7 +14,7 @@
     class="min-h-dvh bg-[#eceef2] p-4 text-[#181a21] flex items-center justify-center"
   >
     <div
-      class="w-full max-w-[430px] h-[min(932px,calc(100dvh-32px))] overflow-y-auto rounded-[30px] sm:rounded-[34px] border border-[#d9dee8] bg-[#f7f8fa] shadow-[0_16px_46px_rgba(12,27,61,0.12)] px-3 py-3 sm:px-4 sm:py-4"
+      class="w-full max-w-[430px] h-[min(932px,calc(100dvh-32px))] overflow-y-auto rounded-[30px] sm:rounded-[34px] border border-[#d9dee8] bg-[#f7f8fa] shadow-[0_16px_46px_rgba(12,27,61,0.12)] px-3 py-3 sm:px-4 sm:py-4 relative"
     >
       <div class="flex items-center justify-between mb-4 px-1">
         <div
@@ -49,55 +49,24 @@
       <h2
         class="text-[36px] sm:text-[42px] leading-none tracking-[-0.8px] mb-2 px-1"
       >
-        Scan
+        Chat History
       </h2>
       <p class="text-sm text-[#6f7683] mb-4 px-1">
-        Capture or upload a wound image for instant analysis.
+        Your recent conversations with AI.
       </p>
 
-      <div class="flex gap-3 mb-4">
-        <button
-          id="cameraBtn"
-          class="group flex-1 rounded-[22px] border border-[#dce4f4] bg-gradient-to-b from-[#f7faff] to-white px-3.5 py-4 text-left transition-all duration-200 hover:-translate-y-[1px] hover:shadow-[0_12px_22px_rgba(47,122,246,0.16)] disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <span class="flex items-center justify-between mb-3">
-            <span
-              class="w-10 h-10 rounded-xl bg-[#eaf1ff] text-[#2f7af6] grid place-items-center text-[18px]"
-            >
-              <i class="bi bi-camera-fill"></i>
-            </span>
-            <i
-              class="bi bi-arrow-up-right text-[#8da7db] text-sm transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            ></i>
-          </span>
-          <span class="block text-[13px] text-[#6f7683] font-semibold"
-            >Live Capture</span
-          >
-          <span class="block text-[19px] font-bold mt-1.5 text-[#1f3f78]"
-            >Open Camera</span
-          >
-        </button>
-        <button
-          id="uploadBtn"
-          class="group flex-1 rounded-[22px] border border-[#d5ecdf] bg-gradient-to-b from-[#f4fff8] to-white px-3.5 py-4 text-left transition-all duration-200 hover:-translate-y-[1px] hover:shadow-[0_12px_22px_rgba(30,174,114,0.16)] disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <span class="flex items-center justify-between mb-3">
-            <span
-              class="w-10 h-10 rounded-xl bg-[#e6f8ee] text-[#1eae72] grid place-items-center text-[18px]"
-            >
-              <i class="bi bi-cloud-arrow-up-fill"></i>
-            </span>
-            <i
-              class="bi bi-arrow-up-right text-[#7cbf9a] text-sm transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            ></i>
-          </span>
-          <span class="block text-[13px] text-[#6f7683] font-semibold"
-            >From Gallery</span
-          >
-          <span class="block text-[19px] font-bold mt-1.5 text-[#1f6a4a]"
-            >Upload Image</span
-          >
-        </button>
+      <div id="chatHistory" class="space-y-3 mb-4">
+        <div class="rounded-[18px] border border-[#e3e7ee] bg-white p-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-14 h-14 rounded-xl bg-[#f0f0f0] flex-shrink-0"></div>
+            <div class="flex-1">
+              <div class="font-semibold text-[#1f3f78]">No chats yet</div>
+              <div class="text-sm text-[#6f7683]">
+                Start chatting to build history
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div
@@ -216,34 +185,95 @@
       </div>
 
       <nav
-        class="grid grid-cols-4 gap-1.5 bg-white border border-[#e3e7ee] rounded-full p-2 mt-2.5"
+        class="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-1.5 bg-white border border-[#e3e7ee] rounded-full p-2 m-3 sm:m-4 z-40"
         aria-label="Main navigation"
       >
         <div
-          class="text-center rounded-full bg-[#e8efff] text-[#2f7af6] text-xs font-bold py-2.5"
+          class="text-center rounded-full bg-[#e8efff] text-[#2f7af6] text-xs font-bold py-2.5 flex-1"
         >
           Home
         </div>
         <div
-          class="text-center rounded-full text-[#6f7581] text-xs font-bold py-2.5"
+          class="text-center rounded-full text-[#6f7581] text-xs font-bold py-2.5 flex-1"
         >
-          Scans
+          Previous Scans
         </div>
+
+        <button
+          id="bottomCameraBtn"
+          class="w-16 h-16 rounded-full bg-gradient-to-b from-[#2f7af6] to-[#1e56cc] text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110 flex items-center justify-center text-3xl flex-shrink-0"
+          aria-label="Camera"
+        >
+          <i class="bi bi-camera-fill"></i>
+        </button>
+
         <div
-          class="text-center rounded-full text-[#6f7581] text-xs font-bold py-2.5"
+          class="text-center rounded-full text-[#6f7581] text-xs font-bold py-2.5 flex-1"
         >
           Tips
         </div>
         <div
-          class="text-center rounded-full text-[#6f7581] text-xs font-bold py-2.5"
+          class="text-center rounded-full text-[#6f7581] text-xs font-bold py-2.5 flex-1"
         >
           Profile
         </div>
       </nav>
 
+      <div
+        id="cameraPopup"
+        class="hidden absolute inset-0 bg-black/40 rounded-[30px] flex items-end z-50"
+      >
+        <div class="w-full bg-white rounded-t-[30px] p-6 animate-slideup">
+          <h3 class="text-xl font-bold mb-4 text-center">
+            Take Photo or Upload
+          </h3>
+          <div class="flex gap-3">
+            <button
+              id="popupCameraBtn"
+              class="flex-1 rounded-[18px] bg-gradient-to-b from-[#f7faff] to-white border border-[#dce4f4] py-4 text-center transition-all duration-200 hover:shadow-lg"
+            >
+              <div class="text-3xl mb-2 text-[#2f7af6]">
+                <i class="bi bi-camera-fill"></i>
+              </div>
+              <div class="font-bold text-[#1f3f78]">Take Photo</div>
+            </button>
+            <button
+              id="popupUploadBtn"
+              class="flex-1 rounded-[18px] bg-gradient-to-b from-[#f4fff8] to-white border border-[#d5ecdf] py-4 text-center transition-all duration-200 hover:shadow-lg"
+            >
+              <div class="text-3xl mb-2 text-[#1eae72]">
+                <i class="bi bi-cloud-arrow-up-fill"></i>
+              </div>
+              <div class="font-bold text-[#1f6a4a]">Upload</div>
+            </button>
+          </div>
+          <button
+            id="closePopupBtn"
+            class="w-full mt-3 rounded-[18px] bg-[#f0f1f4] py-3 text-center font-bold text-[#6f7581] transition-all duration-200 hover:bg-[#e3e5eb]"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
       <input type="file" id="fileInput" accept="image/*" class="hidden" />
     </div>
 
+    <style>
+      @keyframes slideup {
+        from {
+          transform: translateY(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .animate-slideup {
+        animation: slideup 0.3s ease-out;
+      }
+    </style>
     <script src="script.js"></script>
   </body>
 </html>
