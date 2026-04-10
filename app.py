@@ -8,6 +8,9 @@ from PIL import Image
 import base64
 import requests
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 try:
     from pillow_heif import register_heif_opener
