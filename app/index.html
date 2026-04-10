@@ -14,178 +14,184 @@
     class="min-h-dvh bg-[#eceef2] p-4 text-[#181a21] flex items-center justify-center"
   >
     <div
-      class="w-full max-w-[430px] h-[min(932px,calc(100dvh-32px))] overflow-y-auto rounded-[30px] sm:rounded-[34px] border border-[#d9dee8] bg-[#f7f8fa] shadow-[0_16px_46px_rgba(12,27,61,0.12)] px-3 py-3 sm:px-4 sm:py-4 relative"
+      class="w-full max-w-[430px] h-[min(932px,calc(100dvh-32px))] rounded-[30px] sm:rounded-[34px] border border-[#d9dee8] bg-[#f7f8fa] shadow-[0_16px_46px_rgba(12,27,61,0.12)] relative flex flex-col"
     >
-      <div class="flex items-center justify-between mb-4 px-1">
-        <div
-          class="text-[34px] leading-none font-extrabold tracking-[-1px] text-[#2f7af6]"
-        >
-          pocketdoc
-        </div>
-        <div
-          class="w-12 h-12 rounded-full bg-gradient-to-br from-[#d9e6ff] to-[#c2d6ff] grid place-items-center text-[#2b56a8] font-bold"
-        >
-          YI
-        </div>
-      </div>
-
-      <div class="mb-4 px-1">
-        <p class="text-[15px] text-[#6f7683] mb-1">Welcome back,</p>
-        <h1
-          class="text-[38px] sm:text-[40px] leading-none tracking-[-1px] font-semibold"
-        >
-          Yuji Itadori
-        </h1>
-      </div>
-
       <div
-        class="mb-5 rounded-full bg-[#e7e9ee] px-[18px] py-4 flex items-center gap-3 text-[#5b6270] text-[18px] font-semibold"
-        aria-hidden="true"
+        class="overflow-y-auto flex-1 px-3 py-3 sm:px-4 sm:py-4 pb-28 sm:pb-32"
       >
-        <span class="text-[22px]">&#128269;</span>
-        <span>Ask AI for symptoms or wound tips</span>
-      </div>
+        <div class="flex items-center justify-between mb-4 px-1">
+          <div
+            class="text-[34px] leading-none font-extrabold tracking-[-1px] text-[#2f7af6]"
+          >
+            pocketdoc
+          </div>
+          <div
+            class="w-12 h-12 rounded-full bg-gradient-to-br from-[#d9e6ff] to-[#c2d6ff] grid place-items-center text-[#2b56a8] font-bold"
+          >
+            YI
+          </div>
+        </div>
 
-      <h2
-        class="text-[36px] sm:text-[42px] leading-none tracking-[-0.8px] mb-2 px-1"
-      >
-        Chat History
-      </h2>
-      <p class="text-sm text-[#6f7683] mb-4 px-1">
-        Your recent conversations with AI.
-      </p>
+        <div class="mb-4 px-1">
+          <p class="text-[15px] text-[#6f7683] mb-1">Welcome back,</p>
+          <h1
+            class="text-[38px] sm:text-[40px] leading-none tracking-[-1px] font-semibold"
+          >
+            Yuji Itadori
+          </h1>
+        </div>
 
-      <div id="chatHistory" class="space-y-3 mb-4">
-        <div class="rounded-[18px] border border-[#e3e7ee] bg-white p-3.5">
-          <div class="flex items-center gap-3">
-            <div class="w-14 h-14 rounded-xl bg-[#f0f0f0] flex-shrink-0"></div>
-            <div class="flex-1">
-              <div class="font-semibold text-[#1f3f78]">No chats yet</div>
-              <div class="text-sm text-[#6f7683]">
-                Start chatting to build history
+        <div
+          class="mb-5 rounded-full bg-[#e7e9ee] px-[18px] py-4 flex items-center gap-3 text-[#5b6270] text-[18px] font-semibold"
+          aria-hidden="true"
+        >
+          <span class="text-[22px]">&#128269;</span>
+          <span>Ask AI for symptoms or wound tips</span>
+        </div>
+
+        <h2
+          class="text-[36px] sm:text-[42px] leading-none tracking-[-0.8px] mb-2 px-1"
+        >
+          Chat History
+        </h2>
+        <p class="text-sm text-[#6f7683] mb-4 px-1">
+          Your recent conversations with AI.
+        </p>
+
+        <div id="chatHistory" class="space-y-3 mb-4">
+          <div class="rounded-[18px] border border-[#e3e7ee] bg-white p-3.5">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-14 h-14 rounded-xl bg-[#f0f0f0] flex-shrink-0"
+              ></div>
+              <div class="flex-1">
+                <div class="font-semibold text-[#1f3f78]">No chats yet</div>
+                <div class="text-sm text-[#6f7683]">
+                  Start chatting to build history
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div
-        class="media-container hidden mb-3.5 rounded-[18px] border border-[#e3e7ee] bg-white p-2.5"
-      >
-        <video
-          id="video"
-          class="w-full rounded-xl bg-black"
-          playsinline
-        ></video>
-        <canvas id="canvas" class="hidden"></canvas>
-        <img
-          id="imagePreview"
-          class="w-full rounded-xl mb-3.5 max-h-[300px] object-cover hidden"
-        />
-        <div class="camera-controls hidden gap-2.5 mt-3">
-          <button
-            id="captureBtn"
-            class="flex-1 rounded-xl bg-[#ff3b30] text-white px-4 py-2.5 text-sm font-bold"
-          >
-            📸 Capture
-          </button>
-          <button
-            id="closeBtn"
-            class="flex-1 rounded-xl bg-[#77839b] text-white px-4 py-2.5 text-sm font-bold"
-          >
-            ✕ Close
-          </button>
-        </div>
-      </div>
-
-      <div
-        class="hidden text-center text-[#2f7af6] font-semibold my-2"
-        id="loading"
-      >
-        Analyzing image...
-      </div>
-      <div
-        class="hidden bg-[#ffe5e5] text-[#d32f2f] rounded-xl px-3 py-2.5 mt-2.5"
-        id="error"
-      ></div>
-
-      <div
-        class="hidden mt-3 rounded-[20px] border border-[#e3e7ee] bg-white p-4"
-        id="result"
-      >
-        <div class="text-xs text-[#788191] uppercase font-semibold mb-2">
-          Latest Analysis
-        </div>
-        <div class="text-[30px] font-bold mb-1" id="resultClass"></div>
         <div
-          class="text-[15px] text-[#2f7af6] mb-3"
-          id="resultConfidence"
-        ></div>
-        <div class="w-full h-2 bg-[#dfe5ef] rounded overflow-hidden mb-2.5">
-          <div
-            class="h-full rounded bg-gradient-to-r from-[#42b883] to-[#7ad66a]"
-            id="confidenceFill"
-          ></div>
+          class="media-container hidden mb-3.5 rounded-[18px] border border-[#e3e7ee] bg-white p-2.5"
+        >
+          <video
+            id="video"
+            class="w-full rounded-xl bg-black"
+            playsinline
+          ></video>
+          <canvas id="canvas" class="hidden"></canvas>
+          <img
+            id="imagePreview"
+            class="w-full rounded-xl mb-3.5 max-h-[300px] object-cover hidden"
+          />
+          <div class="camera-controls hidden gap-2.5 mt-3">
+            <button
+              id="captureBtn"
+              class="flex-1 rounded-xl bg-[#ff3b30] text-white px-4 py-2.5 text-sm font-bold"
+            >
+              📸 Capture
+            </button>
+            <button
+              id="closeBtn"
+              class="flex-1 rounded-xl bg-[#77839b] text-white px-4 py-2.5 text-sm font-bold"
+            >
+              ✕ Close
+            </button>
+          </div>
         </div>
-        <div class="text-[13px] text-[#666f7f]" id="allPredictions"></div>
-      </div>
 
-      <h2 class="text-[34px] leading-none tracking-[-0.6px] mb-2.5 mt-4 px-1">
-        Discover
-      </h2>
-      <div class="grid grid-cols-2 gap-3 mb-4">
-        <article
-          class="rounded-[20px] bg-[#e7ebf2] p-3.5 min-h-32 flex flex-col justify-between"
+        <div
+          class="hidden text-center text-[#2f7af6] font-semibold my-2"
+          id="loading"
         >
-          <div
-            class="w-[52px] h-[52px] rounded-full bg-[#d1def9] grid place-items-center text-2xl"
-          >
-            i
-          </div>
-          <h3 class="text-[19px] leading-[1.15] font-semibold">
-            Wound Care Basics
-          </h3>
-        </article>
-        <article
-          class="rounded-[20px] bg-[#e7ebf2] p-3.5 min-h-32 flex flex-col justify-between"
+          Analyzing image...
+        </div>
+        <div
+          class="hidden bg-[#ffe5e5] text-[#d32f2f] rounded-xl px-3 py-2.5 mt-2.5"
+          id="error"
+        ></div>
+
+        <div
+          class="hidden mt-3 rounded-[20px] border border-[#e3e7ee] bg-white p-4"
+          id="result"
         >
-          <div
-            class="w-[52px] h-[52px] rounded-full bg-[#d1def9] grid place-items-center text-2xl"
-          >
-            *
+          <div class="text-xs text-[#788191] uppercase font-semibold mb-2">
+            Latest Analysis
           </div>
-          <h3 class="text-[19px] leading-[1.15] font-semibold">
-            Infection Red Flags
-          </h3>
-        </article>
-        <article
-          class="rounded-[20px] bg-[#e7ebf2] p-3.5 min-h-32 flex flex-col justify-between"
-        >
+          <div class="text-[30px] font-bold mb-1" id="resultClass"></div>
           <div
-            class="w-[52px] h-[52px] rounded-full bg-[#d1def9] grid place-items-center text-2xl"
-          >
-            +
+            class="text-[15px] text-[#2f7af6] mb-3"
+            id="resultConfidence"
+          ></div>
+          <div class="w-full h-2 bg-[#dfe5ef] rounded overflow-hidden mb-2.5">
+            <div
+              class="h-full rounded bg-gradient-to-r from-[#42b883] to-[#7ad66a]"
+              id="confidenceFill"
+            ></div>
           </div>
-          <h3 class="text-[19px] leading-[1.15] font-semibold">
-            First Aid Checklist
-          </h3>
-        </article>
-        <article
-          class="rounded-[20px] bg-[#e7ebf2] p-3.5 min-h-32 flex flex-col justify-between"
-        >
-          <div
-            class="w-[52px] h-[52px] rounded-full bg-[#d1def9] grid place-items-center text-2xl"
+          <div class="text-[13px] text-[#666f7f]" id="allPredictions"></div>
+        </div>
+
+        <h2 class="text-[34px] leading-none tracking-[-0.6px] mb-2.5 mt-4 px-1">
+          Discover
+        </h2>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <article
+            class="rounded-[20px] bg-[#e7ebf2] p-3.5 min-h-32 flex flex-col justify-between"
           >
-            ?
-          </div>
-          <h3 class="text-[19px] leading-[1.15] font-semibold">
-            When to See a Doctor
-          </h3>
-        </article>
+            <div
+              class="w-[52px] h-[52px] rounded-full bg-[#d1def9] grid place-items-center text-2xl"
+            >
+              i
+            </div>
+            <h3 class="text-[19px] leading-[1.15] font-semibold">
+              Wound Care Basics
+            </h3>
+          </article>
+          <article
+            class="rounded-[20px] bg-[#e7ebf2] p-3.5 min-h-32 flex flex-col justify-between"
+          >
+            <div
+              class="w-[52px] h-[52px] rounded-full bg-[#d1def9] grid place-items-center text-2xl"
+            >
+              *
+            </div>
+            <h3 class="text-[19px] leading-[1.15] font-semibold">
+              Infection Red Flags
+            </h3>
+          </article>
+          <article
+            class="rounded-[20px] bg-[#e7ebf2] p-3.5 min-h-32 flex flex-col justify-between"
+          >
+            <div
+              class="w-[52px] h-[52px] rounded-full bg-[#d1def9] grid place-items-center text-2xl"
+            >
+              +
+            </div>
+            <h3 class="text-[19px] leading-[1.15] font-semibold">
+              First Aid Checklist
+            </h3>
+          </article>
+          <article
+            class="rounded-[20px] bg-[#e7ebf2] p-3.5 min-h-32 flex flex-col justify-between"
+          >
+            <div
+              class="w-[52px] h-[52px] rounded-full bg-[#d1def9] grid place-items-center text-2xl"
+            >
+              ?
+            </div>
+            <h3 class="text-[19px] leading-[1.15] font-semibold">
+              When to See a Doctor
+            </h3>
+          </article>
+        </div>
       </div>
 
       <nav
-        class="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-1.5 bg-white border border-[#e3e7ee] rounded-full p-2 m-3 sm:m-4 z-40"
+        class="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-1.5 bg-white/90 backdrop-blur-xl border border-white/70 shadow-[0_14px_30px_rgba(15,23,42,0.12)] rounded-full px-2 py-2 sm:bottom-4 sm:left-4 sm:right-4 z-40"
         aria-label="Main navigation"
       >
         <div
