@@ -2,7 +2,7 @@
 
 A Flask-based web application for wound classification using a pre-trained deep learning model.
 
-[![Watch the Demo](https://img.youtube.com/vi/fds8W4hU5kA/hqdefault.jpg)](https://www.youtube.com/embed/fds8W4hU5kA)
+https://github.com/user-attachments/assets/cf1b69a4-c599-4f3b-b8a9-5da4047b30ec
 
 ## Features
 
