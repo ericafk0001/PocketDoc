@@ -1,18 +1,18 @@
-# 🏥 PocketDoc - Wound Classification Web App
+# PocketDoc
 
-A Flask-based web application for wound classification using a pre-trained deep learning model.
+PocketDoc is a Flask web application for AI-based wound image classification.
+It is designed as a fast triage and decision-support tool for accessibility-focused care workflows.
 
 https://github.com/user-attachments/assets/cf1b69a4-c599-4f3b-b8a9-5da4047b30ec
 
-## Features
+## Overview
 
-✅ **Camera Capture** - Take photos directly from your device's camera
-✅ **Image Upload** - Upload existing wound photos
-✅ **Real-time Prediction** - Get instant wound classification
-✅ **Confidence Scores** - See confidence levels for all wound types
-✅ **Mobile Friendly** - Responsive design works on phones and tablets
+- Classifies wound images into 8 categories using a TensorFlow/Keras model.
+- Supports both camera capture and standard file upload in the browser.
+- Returns a predicted class, confidence score, and full per-class probabilities.
+- Includes a post-diagnosis chat assistant for follow-up guidance.
 
-## Wound Classification Categories
+## Wound Classes
 
 - Abrasions
 - Bruises
@@ -23,33 +23,30 @@ https://github.com/user-attachments/assets/cf1b69a4-c599-4f3b-b8a9-5da4047b30ec
 - Normal
 - Pressure Wounds
 
-## Setup Instructions
+## Installation
 
-### 1. Create Virtual Environment
+### 1. Create a virtual environment
 
 ```bash
-# Navigate to project directory
-cd C:\Users\meow888\Desktop\PocketDoc
-
-# Create virtual environment
+# From the project root
 python -m venv venv
 
-# Activate virtual environment
+# Activate (Windows)
 venv\Scripts\activate
 ```
 
-### 2. Install Dependencies
+### 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run the Flask App
+### 3. Set environment variable and run
+
+macOS/Linux:
 
 ```bash
-# Set Hack Club AI key for chat features (macOS/Linux)
 export HACK_CLUB_AI_API_KEY="your_key_here"
-
 python app.py
 ```
 
@@ -67,126 +64,37 @@ set HACK_CLUB_AI_API_KEY=your_key_here
 python app.py
 ```
 
-The app will start on `http://localhost:5000`
+Open http://localhost:5000
 
-### 4. Access the Web App
+## API
 
-Open your browser and go to:
+- `GET /`: Main web interface
+- `GET /health`: Health check
+- `POST /predict/upload`: Multipart image upload inference
+- `POST /predict/camera`: Base64 camera image inference
 
-```
-http://localhost:5000
-```
-
-## Usage
-
-1. **Using Camera:**
-   - Click the "📷 Camera" button
-   - Allow camera access when prompted
-   - Click "📸 Capture" to take a photo
-   - The app automatically analyzes the image
-
-2. **Using Upload:**
-   - Click the "📁 Upload Image" button
-   - Select an image file from your device
-   - The app automatically analyzes the image
-
-3. **View Results:**
-   - See the primary classification and confidence score
-   - View all predictions with confidence percentages
-
-## Project Structure
-
-```
-PocketDoc/
-├── app.py                           # Flask backend
-├── predict.py                       # Prediction utilities
-├── train.py                         # Model training script
-├── wound_classifier.keras           # Pre-trained model
-├── requirements.txt                 # Python dependencies
-└── app/
-    ├── index.html                   # Web interface
-    ├── script.js                    # Frontend logic
-    └── uploads/                     # Uploaded images (auto-created)
-```
-
-## API Endpoints
-
-### GET `/`
-
-Serves the main web app UI
-
-### GET `/health`
-
-Health check endpoint
-
-```bash
-curl http://localhost:5000/health
-```
-
-### POST `/predict/upload`
-
-Upload and predict image
+Example:
 
 ```bash
 curl -X POST -F "file=@image.jpg" http://localhost:5000/predict/upload
 ```
 
-**Response:**
+## Technical Notes
 
-```json
-{
-  "class": "Cut",
-  "confidence": 92.5,
-  "all_predictions": {
-    "Abrasions": 5.2,
-    "Bruises": 2.1,
-    "Burns": 0.2,
-    "Cut": 92.5,
-    "Diabetic Wounds": 0.0,
-    "Laceration": 0.0,
-    "Normal": 0.0,
-    "Pressure Wounds": 0.0
-  }
-}
-```
+- Backend: Flask
+- Frontend: HTML + JavaScript (WebRTC/Canvas)
+- Model input: 224x224 RGB
+- Output: Softmax over 8 classes
+- Max upload size: 16 MB
 
-### POST `/predict/camera`
+## Future Additions
 
-Predict from base64 encoded camera image
-
-```bash
-curl -X POST http://localhost:5000/predict/camera \
-  -H "Content-Type: application/json" \
-  -d '{"image": "data:image/jpeg;base64,..."}'
-```
-
-**Response:** Same as `/predict/upload`
-
-## Technical Details
-
-- **Backend:** Flask web framework
-- **Model:** TensorFlow/Keras (224x224 input, 8 classes)
-- **Frontend:** Vanilla JavaScript with HTML5 Canvas & WebRTC
-- **File Handling:** Supports PNG, JPG, JPEG, GIF, WebP, HEIC, HEIF
-- **Max File Size:** 16MB
-
-## Troubleshooting
-
-### Camera not working
-
-- Grant camera permissions to your browser
-- Use HTTPS or localhost (some browsers require this)
-- Refresh the page and try again
-
-### Model loading error
-
-- Ensure `wound_classifier.keras` is in the project root
-- Check that TensorFlow is installed correctly
-
-### Large file error
-
-- Maximum file size is 16MB
-- Try compressing the image
+- Grad-CAM or saliency heatmaps for model interpretability.
+- Segmentation-assisted wound boundary detection and size tracking.
+- Longitudinal patient timeline for healing progress monitoring.
+- Severity/risk scoring with configurable clinical escalation rules.
+- Improved robustness across skin tones, lighting, and device quality.
+- On-device/mobile inference options for low-connectivity settings.
 
 ## License
 
