@@ -2,8 +2,8 @@
 
 A Flask-based web application for wound classification using a pre-trained deep learning model.
 
+[![Watch the Demo](https://img.youtube.com/vi/fds8W4hU5kA/hqdefault.jpg)](https://www.youtube.com/embed/fds8W4hU5kA)
 
-[![Watch the video](https://youtu.be/fds8W4hU5kA)]
 ## Features
 
 ✅ **Camera Capture** - Take photos directly from your device's camera
