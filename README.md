@@ -3,6 +3,7 @@
 PocketDoc is a Flask web application for AI-based wound image classification.
 It is designed as a fast triage and decision-support tool for accessibility-focused care workflows.
 
+### Core feature demo
 https://github.com/user-attachments/assets/cf1b69a4-c599-4f3b-b8a9-5da4047b30ec
 
 ## Overview
