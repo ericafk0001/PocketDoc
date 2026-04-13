@@ -8,7 +8,10 @@ const chatIntroCard = document.getElementById("chatIntroCard");
 const suggestedPrompts = document.getElementById("suggestedPrompts");
 
 const STORAGE_KEY = "pocketdoc_conversations";
+const THINKING_MIN_MS = 450;
 let activeConversation = null;
+let isAssistantThinking = false;
+let thinkingStartedAt = 0;
 
 function uid() {
   return `chat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
@@ -119,6 +122,22 @@ function renderMessage(message) {
   chatMessages.appendChild(wrapper);
 }
 
+function renderThinkingIndicator() {
+  const wrapper = document.createElement("div");
+  wrapper.className = "flex justify-start";
+  wrapper.innerHTML = `
+    <div class="max-w-[84%] rounded-[18px] px-4 py-3 text-sm leading-6 bg-white border border-[#e3e7ee] text-[#5f6878] rounded-bl-md assistant-thinking-bubble" aria-live="polite" aria-label="AI is thinking">
+      <span class="inline-flex items-center gap-2">
+        Thinking
+        <span class="thinking-dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </span>
+    </div>
+  `;
+  chatMessages.appendChild(wrapper);
+}
+
 function renderConversation() {
   chatMessages.innerHTML = "";
   const hasMessages = activeConversation.messages.length > 0;
@@ -130,6 +149,9 @@ function renderConversation() {
   }
 
   activeConversation.messages.forEach(renderMessage);
+  if (isAssistantThinking) {
+    renderThinkingIndicator();
+  }
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
@@ -152,6 +174,8 @@ function chooseTitleFromMessages(messages) {
 
 async function sendMessage(userText) {
   setError("");
+  isAssistantThinking = false;
+  thinkingStartedAt = 0;
 
   const userMsg = {
     role: "user",
@@ -160,8 +184,14 @@ async function sendMessage(userText) {
   };
   activeConversation.messages.push(userMsg);
   activeConversation.updatedAt = Date.now();
-  activeConversation.title = chooseTitleFromMessages(activeConversation.messages);
+  activeConversation.title = chooseTitleFromMessages(
+    activeConversation.messages,
+  );
   persistActiveConversation();
+
+  // Show thinking immediately while waiting for network + first stream chunk.
+  isAssistantThinking = true;
+  thinkingStartedAt = Date.now();
   renderConversation();
 
   sendBtn.disabled = true;
@@ -194,10 +224,7 @@ async function sendMessage(userText) {
       timestamp: Date.now(),
     };
 
-    activeConversation.messages.push(assistantMsg);
-    activeConversation.updatedAt = Date.now();
-    persistActiveConversation();
-    renderConversation();
+    let assistantMessageAdded = false;
 
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
@@ -220,6 +247,21 @@ async function sendMessage(userText) {
             throw new Error(payload.error);
           }
           if (payload.delta) {
+            if (!assistantMessageAdded) {
+              const elapsed = Date.now() - thinkingStartedAt;
+              if (elapsed < THINKING_MIN_MS) {
+                await new Promise((resolve) => {
+                  setTimeout(resolve, THINKING_MIN_MS - elapsed);
+                });
+              }
+
+              activeConversation.messages.push(assistantMsg);
+              activeConversation.updatedAt = Date.now();
+              persistActiveConversation();
+              assistantMessageAdded = true;
+              isAssistantThinking = false;
+              thinkingStartedAt = 0;
+            }
             assistantMsg.content += payload.delta;
             activeConversation.updatedAt = Date.now();
             persistActiveConversation();
@@ -232,12 +274,21 @@ async function sendMessage(userText) {
       }
     }
 
+    isAssistantThinking = false;
+    thinkingStartedAt = 0;
+
     if (!assistantMsg.content.trim()) {
+      if (!assistantMessageAdded) {
+        activeConversation.messages.push(assistantMsg);
+      }
       assistantMsg.content = "I could not generate a response.";
       persistActiveConversation();
       renderConversation();
     }
   } catch (error) {
+    isAssistantThinking = false;
+    thinkingStartedAt = 0;
+    renderConversation();
     setError(error.message || "Could not reach the AI service.");
   } finally {
     sendBtn.disabled = false;
