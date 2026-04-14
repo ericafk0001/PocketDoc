@@ -19,10 +19,9 @@ https://github.com/user-attachments/assets/cf1b69a4-c599-4f3b-b8a9-5da4047b30ec
 - Bruises
 - Burns
 - Cut
-- Diabetic Wounds
 - Laceration
-- Normal
-- Pressure Wounds
+- Ingrown Nails
+- Stab Wounds
 
 ## Installation
 
