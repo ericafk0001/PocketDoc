@@ -16,7 +16,7 @@ MODEL_PATH = "./wound_classifier.keras"
 IMG_SIZE   = (224, 224)
 CLASS_NAMES = [
     "Abrasions", "Bruises", "Burns", "Cut",
-    "Diabetic Wounds", "Laceration", "Normal", "Pressure Wounds"
+    "Laceration", "Ingrown Nails", "Stab Wounds"
 ]
 
 # ── Load Model ────────────────────────────────────────────────────────────────

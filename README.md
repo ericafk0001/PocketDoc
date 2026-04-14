@@ -7,7 +7,7 @@ https://github.com/user-attachments/assets/cf1b69a4-c599-4f3b-b8a9-5da4047b30ec
 
 ## Overview
 
-- Classifies wound images into 8 categories using a TensorFlow/Keras model.
+- Classifies wound images into 7 categories using a TensorFlow/Keras model.
 - Supports both camera capture and standard file upload in the browser.
 - Returns a predicted class, confidence score, and full per-class probabilities.
 - Includes a post-diagnosis chat assistant for follow-up guidance.
@@ -18,10 +18,9 @@ https://github.com/user-attachments/assets/cf1b69a4-c599-4f3b-b8a9-5da4047b30ec
 - Bruises
 - Burns
 - Cut
-- Diabetic Wounds
 - Laceration
-- Normal
-- Pressure Wounds
+- Ingrown Nails
+- Stab Wounds
 
 ## Installation
 
@@ -84,7 +83,7 @@ curl -X POST -F "file=@image.jpg" http://localhost:5000/predict/upload
 - Backend: Flask
 - Frontend: HTML + JavaScript (WebRTC/Canvas)
 - Model input: 224x224 RGB
-- Output: Softmax over 8 classes
+- Output: Softmax over 7 classes
 - Max upload size: 16 MB
 
 ## Future Additions
